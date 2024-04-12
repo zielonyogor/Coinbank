@@ -1,0 +1,174 @@
+
+LED.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000010a  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .comment      00000030  00000000  00000000  0000015e  2**0
+                  CONTENTS, READONLY
+  2 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000190  2**2
+                  CONTENTS, READONLY
+  3 .debug_info   0000048c  00000000  00000000  000001cc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 0000044e  00000000  00000000  00000658  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   0000001a  00000000  00000000  00000aa6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_str    0000017a  00000000  00000000  00000ac0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	19 c0       	rjmp	.+50     	; 0x36 <__bad_interrupt>
+   4:	18 c0       	rjmp	.+48     	; 0x36 <__bad_interrupt>
+   6:	17 c0       	rjmp	.+46     	; 0x36 <__bad_interrupt>
+   8:	16 c0       	rjmp	.+44     	; 0x36 <__bad_interrupt>
+   a:	15 c0       	rjmp	.+42     	; 0x36 <__bad_interrupt>
+   c:	14 c0       	rjmp	.+40     	; 0x36 <__bad_interrupt>
+   e:	13 c0       	rjmp	.+38     	; 0x36 <__bad_interrupt>
+  10:	12 c0       	rjmp	.+36     	; 0x36 <__bad_interrupt>
+  12:	11 c0       	rjmp	.+34     	; 0x36 <__bad_interrupt>
+  14:	10 c0       	rjmp	.+32     	; 0x36 <__bad_interrupt>
+  16:	0f c0       	rjmp	.+30     	; 0x36 <__bad_interrupt>
+  18:	0e c0       	rjmp	.+28     	; 0x36 <__bad_interrupt>
+  1a:	0d c0       	rjmp	.+26     	; 0x36 <__bad_interrupt>
+  1c:	0c c0       	rjmp	.+24     	; 0x36 <__bad_interrupt>
+  1e:	0b c0       	rjmp	.+22     	; 0x36 <__bad_interrupt>
+  20:	0a c0       	rjmp	.+20     	; 0x36 <__bad_interrupt>
+  22:	09 c0       	rjmp	.+18     	; 0x36 <__bad_interrupt>
+  24:	08 c0       	rjmp	.+16     	; 0x36 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+  32:	59 d0       	rcall	.+178    	; 0xe6 <main>
+  34:	68 c0       	rjmp	.+208    	; 0x106 <_exit>
+
+00000036 <__bad_interrupt>:
+  36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
+
+00000038 <ADC_Init>:
+  38:	3e 9a       	sbi	0x07, 6	; 7
+  3a:	86 b1       	in	r24, 0x06	; 6
+  3c:	87 68       	ori	r24, 0x87	; 135
+  3e:	86 b9       	out	0x06, r24	; 6
+  40:	08 95       	ret
+
+00000042 <IO_Init>:
+  42:	b8 9a       	sbi	0x17, 0	; 23
+  44:	81 b3       	in	r24, 0x11	; 17
+  46:	8f 60       	ori	r24, 0x0F	; 15
+  48:	81 bb       	out	0x11, r24	; 17
+  4a:	a0 98       	cbi	0x14, 0	; 20
+  4c:	08 95       	ret
+
+0000004e <ADC_Read>:
+  4e:	97 b1       	in	r25, 0x07	; 7
+  50:	90 7f       	andi	r25, 0xF0	; 240
+  52:	8f 70       	andi	r24, 0x0F	; 15
+  54:	89 2b       	or	r24, r25
+  56:	87 b9       	out	0x07, r24	; 7
+  58:	36 9a       	sbi	0x06, 6	; 6
+  5a:	36 99       	sbic	0x06, 6	; 6
+  5c:	fe cf       	rjmp	.-4      	; 0x5a <ADC_Read+0xc>
+  5e:	84 b1       	in	r24, 0x04	; 4
+  60:	95 b1       	in	r25, 0x05	; 5
+  62:	08 95       	ret
+
+00000064 <takeCoin>:
+  64:	c0 9a       	sbi	0x18, 0	; 24
+  66:	90 9a       	sbi	0x12, 0	; 18
+  68:	91 98       	cbi	0x12, 1	; 18
+  6a:	2f ef       	ldi	r18, 0xFF	; 255
+  6c:	8f ef       	ldi	r24, 0xFF	; 255
+  6e:	9c e2       	ldi	r25, 0x2C	; 44
+  70:	21 50       	subi	r18, 0x01	; 1
+  72:	80 40       	sbci	r24, 0x00	; 0
+  74:	90 40       	sbci	r25, 0x00	; 0
+  76:	e1 f7       	brne	.-8      	; 0x70 <takeCoin+0xc>
+  78:	00 c0       	rjmp	.+0      	; 0x7a <takeCoin+0x16>
+  7a:	00 00       	nop
+  7c:	90 98       	cbi	0x12, 0	; 18
+  7e:	2f ef       	ldi	r18, 0xFF	; 255
+  80:	8f ef       	ldi	r24, 0xFF	; 255
+  82:	91 e1       	ldi	r25, 0x11	; 17
+  84:	21 50       	subi	r18, 0x01	; 1
+  86:	80 40       	sbci	r24, 0x00	; 0
+  88:	90 40       	sbci	r25, 0x00	; 0
+  8a:	e1 f7       	brne	.-8      	; 0x84 <takeCoin+0x20>
+  8c:	00 c0       	rjmp	.+0      	; 0x8e <takeCoin+0x2a>
+  8e:	00 00       	nop
+  90:	92 9a       	sbi	0x12, 2	; 18
+  92:	2f ef       	ldi	r18, 0xFF	; 255
+  94:	8f e7       	ldi	r24, 0x7F	; 127
+  96:	93 e4       	ldi	r25, 0x43	; 67
+  98:	21 50       	subi	r18, 0x01	; 1
+  9a:	80 40       	sbci	r24, 0x00	; 0
+  9c:	90 40       	sbci	r25, 0x00	; 0
+  9e:	e1 f7       	brne	.-8      	; 0x98 <takeCoin+0x34>
+  a0:	00 c0       	rjmp	.+0      	; 0xa2 <takeCoin+0x3e>
+  a2:	00 00       	nop
+  a4:	92 98       	cbi	0x12, 2	; 18
+  a6:	2f ef       	ldi	r18, 0xFF	; 255
+  a8:	8f e7       	ldi	r24, 0x7F	; 127
+  aa:	9d e0       	ldi	r25, 0x0D	; 13
+  ac:	21 50       	subi	r18, 0x01	; 1
+  ae:	80 40       	sbci	r24, 0x00	; 0
+  b0:	90 40       	sbci	r25, 0x00	; 0
+  b2:	e1 f7       	brne	.-8      	; 0xac <takeCoin+0x48>
+  b4:	00 c0       	rjmp	.+0      	; 0xb6 <takeCoin+0x52>
+  b6:	00 00       	nop
+  b8:	91 9a       	sbi	0x12, 1	; 18
+  ba:	90 98       	cbi	0x12, 0	; 18
+  bc:	2f ef       	ldi	r18, 0xFF	; 255
+  be:	8f ef       	ldi	r24, 0xFF	; 255
+  c0:	9c e2       	ldi	r25, 0x2C	; 44
+  c2:	21 50       	subi	r18, 0x01	; 1
+  c4:	80 40       	sbci	r24, 0x00	; 0
+  c6:	90 40       	sbci	r25, 0x00	; 0
+  c8:	e1 f7       	brne	.-8      	; 0xc2 <takeCoin+0x5e>
+  ca:	00 c0       	rjmp	.+0      	; 0xcc <takeCoin+0x68>
+  cc:	00 00       	nop
+  ce:	91 98       	cbi	0x12, 1	; 18
+  d0:	c0 98       	cbi	0x18, 0	; 24
+  d2:	2f ef       	ldi	r18, 0xFF	; 255
+  d4:	8f e7       	ldi	r24, 0x7F	; 127
+  d6:	96 e1       	ldi	r25, 0x16	; 22
+  d8:	21 50       	subi	r18, 0x01	; 1
+  da:	80 40       	sbci	r24, 0x00	; 0
+  dc:	90 40       	sbci	r25, 0x00	; 0
+  de:	e1 f7       	brne	.-8      	; 0xd8 <takeCoin+0x74>
+  e0:	00 c0       	rjmp	.+0      	; 0xe2 <takeCoin+0x7e>
+  e2:	00 00       	nop
+  e4:	08 95       	ret
+
+000000e6 <main>:
+  e6:	a8 df       	rcall	.-176    	; 0x38 <ADC_Init>
+  e8:	ac df       	rcall	.-168    	; 0x42 <IO_Init>
+  ea:	80 e0       	ldi	r24, 0x00	; 0
+  ec:	b0 df       	rcall	.-160    	; 0x4e <ADC_Read>
+  ee:	84 36       	cpi	r24, 0x64	; 100
+  f0:	91 05       	cpc	r25, r1
+  f2:	08 f4       	brcc	.+2      	; 0xf6 <main+0x10>
+  f4:	b7 df       	rcall	.-146    	; 0x64 <takeCoin>
+  f6:	26 e6       	ldi	r18, 0x66	; 102
+  f8:	86 ee       	ldi	r24, 0xE6	; 230
+  fa:	90 e0       	ldi	r25, 0x00	; 0
+  fc:	21 50       	subi	r18, 0x01	; 1
+  fe:	80 40       	sbci	r24, 0x00	; 0
+ 100:	90 40       	sbci	r25, 0x00	; 0
+ 102:	e1 f7       	brne	.-8      	; 0xfc <main+0x16>
+ 104:	f2 cf       	rjmp	.-28     	; 0xea <main+0x4>
+
+00000106 <_exit>:
+ 106:	f8 94       	cli
+
+00000108 <__stop_program>:
+ 108:	ff cf       	rjmp	.-2      	; 0x108 <__stop_program>
