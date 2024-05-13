@@ -3,19 +3,19 @@ LED.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000010a  00000000  00000000  00000054  2**1
+  0 .text         00000286  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .comment      00000030  00000000  00000000  0000015e  2**0
+  1 .comment      00000030  00000000  00000000  000002da  2**0
                   CONTENTS, READONLY
-  2 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000190  2**2
+  2 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000030c  2**2
                   CONTENTS, READONLY
-  3 .debug_info   0000048c  00000000  00000000  000001cc  2**0
+  3 .debug_info   0000048c  00000000  00000000  00000348  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_abbrev 0000044e  00000000  00000000  00000658  2**0
+  4 .debug_abbrev 0000044e  00000000  00000000  000007d4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_line   0000001a  00000000  00000000  00000aa6  2**0
+  5 .debug_line   0000001a  00000000  00000000  00000c22  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_str    0000017a  00000000  00000000  00000ac0  2**0
+  6 .debug_str    0000017a  00000000  00000000  00000c3c  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -48,8 +48,8 @@ Disassembly of section .text:
   2c:	d4 e0       	ldi	r29, 0x04	; 4
   2e:	de bf       	out	0x3e, r29	; 62
   30:	cd bf       	out	0x3d, r28	; 61
-  32:	59 d0       	rcall	.+178    	; 0xe6 <main>
-  34:	68 c0       	rjmp	.+208    	; 0x106 <_exit>
+  32:	15 d1       	rcall	.+554    	; 0x25e <main>
+  34:	26 c1       	rjmp	.+588    	; 0x282 <_exit>
 
 00000036 <__bad_interrupt>:
   36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
@@ -66,109 +66,303 @@ Disassembly of section .text:
   44:	81 b3       	in	r24, 0x11	; 17
   46:	8f 60       	ori	r24, 0x0F	; 15
   48:	81 bb       	out	0x11, r24	; 17
-  4a:	a0 98       	cbi	0x14, 0	; 20
-  4c:	08 95       	ret
+  4a:	bb 9a       	sbi	0x17, 3	; 23
+  4c:	a0 98       	cbi	0x14, 0	; 20
+  4e:	08 95       	ret
 
-0000004e <ADC_Read>:
-  4e:	97 b1       	in	r25, 0x07	; 7
-  50:	90 7f       	andi	r25, 0xF0	; 240
-  52:	8f 70       	andi	r24, 0x0F	; 15
-  54:	89 2b       	or	r24, r25
-  56:	87 b9       	out	0x07, r24	; 7
-  58:	36 9a       	sbi	0x06, 6	; 6
-  5a:	36 99       	sbic	0x06, 6	; 6
-  5c:	fe cf       	rjmp	.-4      	; 0x5a <ADC_Read+0xc>
-  5e:	84 b1       	in	r24, 0x04	; 4
-  60:	95 b1       	in	r25, 0x05	; 5
-  62:	08 95       	ret
+00000050 <PWM_Init>:
+  50:	85 b5       	in	r24, 0x25	; 37
+  52:	8c 66       	ori	r24, 0x6C	; 108
+  54:	85 bd       	out	0x25, r24	; 37
+  56:	08 95       	ret
 
-00000064 <takeCoin>:
-  64:	c0 9a       	sbi	0x18, 0	; 24
-  66:	90 9a       	sbi	0x12, 0	; 18
-  68:	91 98       	cbi	0x12, 1	; 18
-  6a:	2f ef       	ldi	r18, 0xFF	; 255
-  6c:	8f ef       	ldi	r24, 0xFF	; 255
-  6e:	9c e2       	ldi	r25, 0x2C	; 44
-  70:	21 50       	subi	r18, 0x01	; 1
-  72:	80 40       	sbci	r24, 0x00	; 0
-  74:	90 40       	sbci	r25, 0x00	; 0
-  76:	e1 f7       	brne	.-8      	; 0x70 <takeCoin+0xc>
-  78:	00 c0       	rjmp	.+0      	; 0x7a <takeCoin+0x16>
-  7a:	00 00       	nop
-  7c:	90 98       	cbi	0x12, 0	; 18
-  7e:	2f ef       	ldi	r18, 0xFF	; 255
-  80:	8f ef       	ldi	r24, 0xFF	; 255
-  82:	91 e1       	ldi	r25, 0x11	; 17
-  84:	21 50       	subi	r18, 0x01	; 1
-  86:	80 40       	sbci	r24, 0x00	; 0
-  88:	90 40       	sbci	r25, 0x00	; 0
-  8a:	e1 f7       	brne	.-8      	; 0x84 <takeCoin+0x20>
-  8c:	00 c0       	rjmp	.+0      	; 0x8e <takeCoin+0x2a>
-  8e:	00 00       	nop
-  90:	92 9a       	sbi	0x12, 2	; 18
-  92:	2f ef       	ldi	r18, 0xFF	; 255
-  94:	8f e7       	ldi	r24, 0x7F	; 127
-  96:	93 e4       	ldi	r25, 0x43	; 67
-  98:	21 50       	subi	r18, 0x01	; 1
-  9a:	80 40       	sbci	r24, 0x00	; 0
-  9c:	90 40       	sbci	r25, 0x00	; 0
-  9e:	e1 f7       	brne	.-8      	; 0x98 <takeCoin+0x34>
-  a0:	00 c0       	rjmp	.+0      	; 0xa2 <takeCoin+0x3e>
-  a2:	00 00       	nop
-  a4:	92 98       	cbi	0x12, 2	; 18
-  a6:	2f ef       	ldi	r18, 0xFF	; 255
-  a8:	8f e7       	ldi	r24, 0x7F	; 127
-  aa:	9d e0       	ldi	r25, 0x0D	; 13
-  ac:	21 50       	subi	r18, 0x01	; 1
-  ae:	80 40       	sbci	r24, 0x00	; 0
-  b0:	90 40       	sbci	r25, 0x00	; 0
-  b2:	e1 f7       	brne	.-8      	; 0xac <takeCoin+0x48>
-  b4:	00 c0       	rjmp	.+0      	; 0xb6 <takeCoin+0x52>
-  b6:	00 00       	nop
-  b8:	91 9a       	sbi	0x12, 1	; 18
-  ba:	90 98       	cbi	0x12, 0	; 18
-  bc:	2f ef       	ldi	r18, 0xFF	; 255
-  be:	8f ef       	ldi	r24, 0xFF	; 255
-  c0:	9c e2       	ldi	r25, 0x2C	; 44
-  c2:	21 50       	subi	r18, 0x01	; 1
-  c4:	80 40       	sbci	r24, 0x00	; 0
-  c6:	90 40       	sbci	r25, 0x00	; 0
-  c8:	e1 f7       	brne	.-8      	; 0xc2 <takeCoin+0x5e>
-  ca:	00 c0       	rjmp	.+0      	; 0xcc <takeCoin+0x68>
-  cc:	00 00       	nop
-  ce:	91 98       	cbi	0x12, 1	; 18
-  d0:	c0 98       	cbi	0x18, 0	; 24
-  d2:	2f ef       	ldi	r18, 0xFF	; 255
-  d4:	8f e7       	ldi	r24, 0x7F	; 127
-  d6:	96 e1       	ldi	r25, 0x16	; 22
-  d8:	21 50       	subi	r18, 0x01	; 1
-  da:	80 40       	sbci	r24, 0x00	; 0
-  dc:	90 40       	sbci	r25, 0x00	; 0
-  de:	e1 f7       	brne	.-8      	; 0xd8 <takeCoin+0x74>
-  e0:	00 c0       	rjmp	.+0      	; 0xe2 <takeCoin+0x7e>
-  e2:	00 00       	nop
-  e4:	08 95       	ret
+00000058 <ADC_Read>:
+  58:	97 b1       	in	r25, 0x07	; 7
+  5a:	90 7f       	andi	r25, 0xF0	; 240
+  5c:	8f 70       	andi	r24, 0x0F	; 15
+  5e:	89 2b       	or	r24, r25
+  60:	87 b9       	out	0x07, r24	; 7
+  62:	36 9a       	sbi	0x06, 6	; 6
+  64:	36 99       	sbic	0x06, 6	; 6
+  66:	fe cf       	rjmp	.-4      	; 0x64 <ADC_Read+0xc>
+  68:	84 b1       	in	r24, 0x04	; 4
+  6a:	95 b1       	in	r25, 0x05	; 5
+  6c:	08 95       	ret
 
-000000e6 <main>:
-  e6:	a8 df       	rcall	.-176    	; 0x38 <ADC_Init>
-  e8:	ac df       	rcall	.-168    	; 0x42 <IO_Init>
-  ea:	80 e0       	ldi	r24, 0x00	; 0
-  ec:	b0 df       	rcall	.-160    	; 0x4e <ADC_Read>
-  ee:	84 36       	cpi	r24, 0x64	; 100
-  f0:	91 05       	cpc	r25, r1
-  f2:	08 f4       	brcc	.+2      	; 0xf6 <main+0x10>
-  f4:	b7 df       	rcall	.-146    	; 0x64 <takeCoin>
-  f6:	26 e6       	ldi	r18, 0x66	; 102
-  f8:	86 ee       	ldi	r24, 0xE6	; 230
-  fa:	90 e0       	ldi	r25, 0x00	; 0
-  fc:	21 50       	subi	r18, 0x01	; 1
-  fe:	80 40       	sbci	r24, 0x00	; 0
- 100:	90 40       	sbci	r25, 0x00	; 0
- 102:	e1 f7       	brne	.-8      	; 0xfc <main+0x16>
- 104:	f2 cf       	rjmp	.-28     	; 0xea <main+0x4>
+0000006e <lightLEDbutMEOW>:
+  6e:	c0 9a       	sbi	0x18, 0	; 24
+  70:	2f ef       	ldi	r18, 0xFF	; 255
+  72:	8f e7       	ldi	r24, 0x7F	; 127
+  74:	9d e0       	ldi	r25, 0x0D	; 13
+  76:	21 50       	subi	r18, 0x01	; 1
+  78:	80 40       	sbci	r24, 0x00	; 0
+  7a:	90 40       	sbci	r25, 0x00	; 0
+  7c:	e1 f7       	brne	.-8      	; 0x76 <lightLEDbutMEOW+0x8>
+  7e:	00 c0       	rjmp	.+0      	; 0x80 <lightLEDbutMEOW+0x12>
+  80:	00 00       	nop
+  82:	c0 98       	cbi	0x18, 0	; 24
+  84:	2f ef       	ldi	r18, 0xFF	; 255
+  86:	8f e7       	ldi	r24, 0x7F	; 127
+  88:	94 e0       	ldi	r25, 0x04	; 4
+  8a:	21 50       	subi	r18, 0x01	; 1
+  8c:	80 40       	sbci	r24, 0x00	; 0
+  8e:	90 40       	sbci	r25, 0x00	; 0
+  90:	e1 f7       	brne	.-8      	; 0x8a <lightLEDbutMEOW+0x1c>
+  92:	00 c0       	rjmp	.+0      	; 0x94 <lightLEDbutMEOW+0x26>
+  94:	00 00       	nop
+  96:	c0 9a       	sbi	0x18, 0	; 24
+  98:	2f ef       	ldi	r18, 0xFF	; 255
+  9a:	8f e7       	ldi	r24, 0x7F	; 127
+  9c:	9d e0       	ldi	r25, 0x0D	; 13
+  9e:	21 50       	subi	r18, 0x01	; 1
+  a0:	80 40       	sbci	r24, 0x00	; 0
+  a2:	90 40       	sbci	r25, 0x00	; 0
+  a4:	e1 f7       	brne	.-8      	; 0x9e <lightLEDbutMEOW+0x30>
+  a6:	00 c0       	rjmp	.+0      	; 0xa8 <lightLEDbutMEOW+0x3a>
+  a8:	00 00       	nop
+  aa:	c0 98       	cbi	0x18, 0	; 24
+  ac:	2f ef       	ldi	r18, 0xFF	; 255
+  ae:	8f e7       	ldi	r24, 0x7F	; 127
+  b0:	9d e0       	ldi	r25, 0x0D	; 13
+  b2:	21 50       	subi	r18, 0x01	; 1
+  b4:	80 40       	sbci	r24, 0x00	; 0
+  b6:	90 40       	sbci	r25, 0x00	; 0
+  b8:	e1 f7       	brne	.-8      	; 0xb2 <lightLEDbutMEOW+0x44>
+  ba:	00 c0       	rjmp	.+0      	; 0xbc <lightLEDbutMEOW+0x4e>
+  bc:	00 00       	nop
+  be:	c0 9a       	sbi	0x18, 0	; 24
+  c0:	2f ef       	ldi	r18, 0xFF	; 255
+  c2:	8f e7       	ldi	r24, 0x7F	; 127
+  c4:	94 e0       	ldi	r25, 0x04	; 4
+  c6:	21 50       	subi	r18, 0x01	; 1
+  c8:	80 40       	sbci	r24, 0x00	; 0
+  ca:	90 40       	sbci	r25, 0x00	; 0
+  cc:	e1 f7       	brne	.-8      	; 0xc6 <lightLEDbutMEOW+0x58>
+  ce:	00 c0       	rjmp	.+0      	; 0xd0 <lightLEDbutMEOW+0x62>
+  d0:	00 00       	nop
+  d2:	c0 98       	cbi	0x18, 0	; 24
+  d4:	2f ef       	ldi	r18, 0xFF	; 255
+  d6:	8f e7       	ldi	r24, 0x7F	; 127
+  d8:	9d e0       	ldi	r25, 0x0D	; 13
+  da:	21 50       	subi	r18, 0x01	; 1
+  dc:	80 40       	sbci	r24, 0x00	; 0
+  de:	90 40       	sbci	r25, 0x00	; 0
+  e0:	e1 f7       	brne	.-8      	; 0xda <lightLEDbutMEOW+0x6c>
+  e2:	00 c0       	rjmp	.+0      	; 0xe4 <lightLEDbutMEOW+0x76>
+  e4:	00 00       	nop
+  e6:	c0 9a       	sbi	0x18, 0	; 24
+  e8:	2f ef       	ldi	r18, 0xFF	; 255
+  ea:	8f e7       	ldi	r24, 0x7F	; 127
+  ec:	9d e0       	ldi	r25, 0x0D	; 13
+  ee:	21 50       	subi	r18, 0x01	; 1
+  f0:	80 40       	sbci	r24, 0x00	; 0
+  f2:	90 40       	sbci	r25, 0x00	; 0
+  f4:	e1 f7       	brne	.-8      	; 0xee <lightLEDbutMEOW+0x80>
+  f6:	00 c0       	rjmp	.+0      	; 0xf8 <lightLEDbutMEOW+0x8a>
+  f8:	00 00       	nop
+  fa:	c0 98       	cbi	0x18, 0	; 24
+  fc:	2f ef       	ldi	r18, 0xFF	; 255
+  fe:	8f e7       	ldi	r24, 0x7F	; 127
+ 100:	94 e0       	ldi	r25, 0x04	; 4
+ 102:	21 50       	subi	r18, 0x01	; 1
+ 104:	80 40       	sbci	r24, 0x00	; 0
+ 106:	90 40       	sbci	r25, 0x00	; 0
+ 108:	e1 f7       	brne	.-8      	; 0x102 <lightLEDbutMEOW+0x94>
+ 10a:	00 c0       	rjmp	.+0      	; 0x10c <lightLEDbutMEOW+0x9e>
+ 10c:	00 00       	nop
+ 10e:	c0 9a       	sbi	0x18, 0	; 24
+ 110:	2f ef       	ldi	r18, 0xFF	; 255
+ 112:	8f e7       	ldi	r24, 0x7F	; 127
+ 114:	9d e0       	ldi	r25, 0x0D	; 13
+ 116:	21 50       	subi	r18, 0x01	; 1
+ 118:	80 40       	sbci	r24, 0x00	; 0
+ 11a:	90 40       	sbci	r25, 0x00	; 0
+ 11c:	e1 f7       	brne	.-8      	; 0x116 <lightLEDbutMEOW+0xa8>
+ 11e:	00 c0       	rjmp	.+0      	; 0x120 <lightLEDbutMEOW+0xb2>
+ 120:	00 00       	nop
+ 122:	c0 98       	cbi	0x18, 0	; 24
+ 124:	2f ef       	ldi	r18, 0xFF	; 255
+ 126:	8f e7       	ldi	r24, 0x7F	; 127
+ 128:	94 e0       	ldi	r25, 0x04	; 4
+ 12a:	21 50       	subi	r18, 0x01	; 1
+ 12c:	80 40       	sbci	r24, 0x00	; 0
+ 12e:	90 40       	sbci	r25, 0x00	; 0
+ 130:	e1 f7       	brne	.-8      	; 0x12a <lightLEDbutMEOW+0xbc>
+ 132:	00 c0       	rjmp	.+0      	; 0x134 <lightLEDbutMEOW+0xc6>
+ 134:	00 00       	nop
+ 136:	c0 9a       	sbi	0x18, 0	; 24
+ 138:	2f ef       	ldi	r18, 0xFF	; 255
+ 13a:	8f e7       	ldi	r24, 0x7F	; 127
+ 13c:	9d e0       	ldi	r25, 0x0D	; 13
+ 13e:	21 50       	subi	r18, 0x01	; 1
+ 140:	80 40       	sbci	r24, 0x00	; 0
+ 142:	90 40       	sbci	r25, 0x00	; 0
+ 144:	e1 f7       	brne	.-8      	; 0x13e <lightLEDbutMEOW+0xd0>
+ 146:	00 c0       	rjmp	.+0      	; 0x148 <lightLEDbutMEOW+0xda>
+ 148:	00 00       	nop
+ 14a:	c0 98       	cbi	0x18, 0	; 24
+ 14c:	2f ef       	ldi	r18, 0xFF	; 255
+ 14e:	8f e7       	ldi	r24, 0x7F	; 127
+ 150:	9d e0       	ldi	r25, 0x0D	; 13
+ 152:	21 50       	subi	r18, 0x01	; 1
+ 154:	80 40       	sbci	r24, 0x00	; 0
+ 156:	90 40       	sbci	r25, 0x00	; 0
+ 158:	e1 f7       	brne	.-8      	; 0x152 <lightLEDbutMEOW+0xe4>
+ 15a:	00 c0       	rjmp	.+0      	; 0x15c <lightLEDbutMEOW+0xee>
+ 15c:	00 00       	nop
+ 15e:	c0 9a       	sbi	0x18, 0	; 24
+ 160:	2f ef       	ldi	r18, 0xFF	; 255
+ 162:	8f e7       	ldi	r24, 0x7F	; 127
+ 164:	94 e0       	ldi	r25, 0x04	; 4
+ 166:	21 50       	subi	r18, 0x01	; 1
+ 168:	80 40       	sbci	r24, 0x00	; 0
+ 16a:	90 40       	sbci	r25, 0x00	; 0
+ 16c:	e1 f7       	brne	.-8      	; 0x166 <lightLEDbutMEOW+0xf8>
+ 16e:	00 c0       	rjmp	.+0      	; 0x170 <lightLEDbutMEOW+0x102>
+ 170:	00 00       	nop
+ 172:	c0 98       	cbi	0x18, 0	; 24
+ 174:	2f ef       	ldi	r18, 0xFF	; 255
+ 176:	8f e7       	ldi	r24, 0x7F	; 127
+ 178:	94 e0       	ldi	r25, 0x04	; 4
+ 17a:	21 50       	subi	r18, 0x01	; 1
+ 17c:	80 40       	sbci	r24, 0x00	; 0
+ 17e:	90 40       	sbci	r25, 0x00	; 0
+ 180:	e1 f7       	brne	.-8      	; 0x17a <lightLEDbutMEOW+0x10c>
+ 182:	00 c0       	rjmp	.+0      	; 0x184 <lightLEDbutMEOW+0x116>
+ 184:	00 00       	nop
+ 186:	c0 9a       	sbi	0x18, 0	; 24
+ 188:	2f ef       	ldi	r18, 0xFF	; 255
+ 18a:	8f e7       	ldi	r24, 0x7F	; 127
+ 18c:	9d e0       	ldi	r25, 0x0D	; 13
+ 18e:	21 50       	subi	r18, 0x01	; 1
+ 190:	80 40       	sbci	r24, 0x00	; 0
+ 192:	90 40       	sbci	r25, 0x00	; 0
+ 194:	e1 f7       	brne	.-8      	; 0x18e <lightLEDbutMEOW+0x120>
+ 196:	00 c0       	rjmp	.+0      	; 0x198 <lightLEDbutMEOW+0x12a>
+ 198:	00 00       	nop
+ 19a:	c0 98       	cbi	0x18, 0	; 24
+ 19c:	2f ef       	ldi	r18, 0xFF	; 255
+ 19e:	8f e7       	ldi	r24, 0x7F	; 127
+ 1a0:	94 e0       	ldi	r25, 0x04	; 4
+ 1a2:	21 50       	subi	r18, 0x01	; 1
+ 1a4:	80 40       	sbci	r24, 0x00	; 0
+ 1a6:	90 40       	sbci	r25, 0x00	; 0
+ 1a8:	e1 f7       	brne	.-8      	; 0x1a2 <lightLEDbutMEOW+0x134>
+ 1aa:	00 c0       	rjmp	.+0      	; 0x1ac <lightLEDbutMEOW+0x13e>
+ 1ac:	00 00       	nop
+ 1ae:	c0 9a       	sbi	0x18, 0	; 24
+ 1b0:	2f ef       	ldi	r18, 0xFF	; 255
+ 1b2:	8f e7       	ldi	r24, 0x7F	; 127
+ 1b4:	9d e0       	ldi	r25, 0x0D	; 13
+ 1b6:	21 50       	subi	r18, 0x01	; 1
+ 1b8:	80 40       	sbci	r24, 0x00	; 0
+ 1ba:	90 40       	sbci	r25, 0x00	; 0
+ 1bc:	e1 f7       	brne	.-8      	; 0x1b6 <lightLEDbutMEOW+0x148>
+ 1be:	00 c0       	rjmp	.+0      	; 0x1c0 <lightLEDbutMEOW+0x152>
+ 1c0:	00 00       	nop
+ 1c2:	c0 98       	cbi	0x18, 0	; 24
+ 1c4:	2f ef       	ldi	r18, 0xFF	; 255
+ 1c6:	8f e7       	ldi	r24, 0x7F	; 127
+ 1c8:	9d e0       	ldi	r25, 0x0D	; 13
+ 1ca:	21 50       	subi	r18, 0x01	; 1
+ 1cc:	80 40       	sbci	r24, 0x00	; 0
+ 1ce:	90 40       	sbci	r25, 0x00	; 0
+ 1d0:	e1 f7       	brne	.-8      	; 0x1ca <lightLEDbutMEOW+0x15c>
+ 1d2:	00 c0       	rjmp	.+0      	; 0x1d4 <lightLEDbutMEOW+0x166>
+ 1d4:	00 00       	nop
+ 1d6:	08 95       	ret
 
-00000106 <_exit>:
- 106:	f8 94       	cli
+000001d8 <takeCoin>:
+ 1d8:	8f ef       	ldi	r24, 0xFF	; 255
+ 1da:	83 bd       	out	0x23, r24	; 35
+ 1dc:	48 df       	rcall	.-368    	; 0x6e <lightLEDbutMEOW>
+ 1de:	c0 9a       	sbi	0x18, 0	; 24
+ 1e0:	90 9a       	sbi	0x12, 0	; 18
+ 1e2:	91 98       	cbi	0x12, 1	; 18
+ 1e4:	29 e9       	ldi	r18, 0x99	; 153
+ 1e6:	89 e1       	ldi	r24, 0x19	; 25
+ 1e8:	95 e3       	ldi	r25, 0x35	; 53
+ 1ea:	21 50       	subi	r18, 0x01	; 1
+ 1ec:	80 40       	sbci	r24, 0x00	; 0
+ 1ee:	90 40       	sbci	r25, 0x00	; 0
+ 1f0:	e1 f7       	brne	.-8      	; 0x1ea <takeCoin+0x12>
+ 1f2:	00 00       	nop
+ 1f4:	90 98       	cbi	0x12, 0	; 18
+ 1f6:	2f ef       	ldi	r18, 0xFF	; 255
+ 1f8:	8f e7       	ldi	r24, 0x7F	; 127
+ 1fa:	93 e4       	ldi	r25, 0x43	; 67
+ 1fc:	21 50       	subi	r18, 0x01	; 1
+ 1fe:	80 40       	sbci	r24, 0x00	; 0
+ 200:	90 40       	sbci	r25, 0x00	; 0
+ 202:	e1 f7       	brne	.-8      	; 0x1fc <takeCoin+0x24>
+ 204:	00 c0       	rjmp	.+0      	; 0x206 <takeCoin+0x2e>
+ 206:	00 00       	nop
+ 208:	93 9a       	sbi	0x12, 3	; 18
+ 20a:	2c ec       	ldi	r18, 0xCC	; 204
+ 20c:	8c ee       	ldi	r24, 0xEC	; 236
+ 20e:	96 e2       	ldi	r25, 0x26	; 38
+ 210:	21 50       	subi	r18, 0x01	; 1
+ 212:	80 40       	sbci	r24, 0x00	; 0
+ 214:	90 40       	sbci	r25, 0x00	; 0
+ 216:	e1 f7       	brne	.-8      	; 0x210 <takeCoin+0x38>
+ 218:	00 c0       	rjmp	.+0      	; 0x21a <takeCoin+0x42>
+ 21a:	93 98       	cbi	0x12, 3	; 18
+ 21c:	2f ef       	ldi	r18, 0xFF	; 255
+ 21e:	8f ef       	ldi	r24, 0xFF	; 255
+ 220:	99 e5       	ldi	r25, 0x59	; 89
+ 222:	21 50       	subi	r18, 0x01	; 1
+ 224:	80 40       	sbci	r24, 0x00	; 0
+ 226:	90 40       	sbci	r25, 0x00	; 0
+ 228:	e1 f7       	brne	.-8      	; 0x222 <takeCoin+0x4a>
+ 22a:	00 c0       	rjmp	.+0      	; 0x22c <takeCoin+0x54>
+ 22c:	00 00       	nop
+ 22e:	91 9a       	sbi	0x12, 1	; 18
+ 230:	90 98       	cbi	0x12, 0	; 18
+ 232:	2f ef       	ldi	r18, 0xFF	; 255
+ 234:	8f ef       	ldi	r24, 0xFF	; 255
+ 236:	98 e0       	ldi	r25, 0x08	; 8
+ 238:	21 50       	subi	r18, 0x01	; 1
+ 23a:	80 40       	sbci	r24, 0x00	; 0
+ 23c:	90 40       	sbci	r25, 0x00	; 0
+ 23e:	e1 f7       	brne	.-8      	; 0x238 <takeCoin+0x60>
+ 240:	00 c0       	rjmp	.+0      	; 0x242 <takeCoin+0x6a>
+ 242:	00 00       	nop
+ 244:	91 98       	cbi	0x12, 1	; 18
+ 246:	c0 98       	cbi	0x18, 0	; 24
+ 248:	13 bc       	out	0x23, r1	; 35
+ 24a:	2f ef       	ldi	r18, 0xFF	; 255
+ 24c:	8f ef       	ldi	r24, 0xFF	; 255
+ 24e:	9c e2       	ldi	r25, 0x2C	; 44
+ 250:	21 50       	subi	r18, 0x01	; 1
+ 252:	80 40       	sbci	r24, 0x00	; 0
+ 254:	90 40       	sbci	r25, 0x00	; 0
+ 256:	e1 f7       	brne	.-8      	; 0x250 <takeCoin+0x78>
+ 258:	00 c0       	rjmp	.+0      	; 0x25a <takeCoin+0x82>
+ 25a:	00 00       	nop
+ 25c:	08 95       	ret
 
-00000108 <__stop_program>:
- 108:	ff cf       	rjmp	.-2      	; 0x108 <__stop_program>
+0000025e <main>:
+ 25e:	ec de       	rcall	.-552    	; 0x38 <ADC_Init>
+ 260:	f0 de       	rcall	.-544    	; 0x42 <IO_Init>
+ 262:	f6 de       	rcall	.-532    	; 0x50 <PWM_Init>
+ 264:	80 e0       	ldi	r24, 0x00	; 0
+ 266:	f8 de       	rcall	.-528    	; 0x58 <ADC_Read>
+ 268:	0a 97       	sbiw	r24, 0x0a	; 10
+ 26a:	08 f4       	brcc	.+2      	; 0x26e <main+0x10>
+ 26c:	b5 df       	rcall	.-150    	; 0x1d8 <takeCoin>
+ 26e:	2f ef       	ldi	r18, 0xFF	; 255
+ 270:	8f e7       	ldi	r24, 0x7F	; 127
+ 272:	94 e0       	ldi	r25, 0x04	; 4
+ 274:	21 50       	subi	r18, 0x01	; 1
+ 276:	80 40       	sbci	r24, 0x00	; 0
+ 278:	90 40       	sbci	r25, 0x00	; 0
+ 27a:	e1 f7       	brne	.-8      	; 0x274 <main+0x16>
+ 27c:	00 c0       	rjmp	.+0      	; 0x27e <main+0x20>
+ 27e:	00 00       	nop
+ 280:	f1 cf       	rjmp	.-30     	; 0x264 <main+0x6>
+
+00000282 <_exit>:
+ 282:	f8 94       	cli
+
+00000284 <__stop_program>:
+ 284:	ff cf       	rjmp	.-2      	; 0x284 <__stop_program>

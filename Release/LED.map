@@ -116,7 +116,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x10a
+.text           0x00000000      0x286
  *(.vectors)
  .vectors       0x00000000       0x26 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr4/crtatmega8.o
                 0x00000000                __vector_default
@@ -195,35 +195,41 @@ END GROUP
  .text.ADC_Init
                 0x00000038        0xa ./main.o
                 0x00000038                ADC_Init
- .text.IO_Init  0x00000042        0xc ./main.o
+ .text.IO_Init  0x00000042        0xe ./main.o
                 0x00000042                IO_Init
+ .text.PWM_Init
+                0x00000050        0x8 ./main.o
+                0x00000050                PWM_Init
  .text.ADC_Read
-                0x0000004e       0x16 ./main.o
-                0x0000004e                ADC_Read
+                0x00000058       0x16 ./main.o
+                0x00000058                ADC_Read
+ .text.lightLEDbutMEOW
+                0x0000006e      0x16a ./main.o
+                0x0000006e                lightLEDbutMEOW
  .text.takeCoin
-                0x00000064       0x82 ./main.o
-                0x00000064                takeCoin
+                0x000001d8       0x86 ./main.o
+                0x000001d8                takeCoin
  .text.startup.main
-                0x000000e6       0x20 ./main.o
-                0x000000e6                main
+                0x0000025e       0x24 ./main.o
+                0x0000025e                main
  .text.libgcc.mul
-                0x00000106        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
+                0x00000282        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
  .text.libgcc.div
-                0x00000106        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
- .text.libgcc   0x00000106        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
+                0x00000282        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
+ .text.libgcc   0x00000282        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
  .text.libgcc.prologue
-                0x00000106        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
+                0x00000282        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
  .text.libgcc.builtins
-                0x00000106        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
+                0x00000282        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
  .text.libgcc.fmul
-                0x00000106        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
+                0x00000282        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
  .text.libgcc.fixed
-                0x00000106        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
-                0x00000106                . = ALIGN (0x2)
+                0x00000282        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
+                0x00000282                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000106        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
-                0x00000106                _exit
-                0x00000106                exit
+ .fini9         0x00000282        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
+                0x00000282                _exit
+                0x00000282                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -242,11 +248,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000106        0x4 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
+ .fini0         0x00000282        0x4 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/avr4\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000010a                _etext = .
+                0x00000286                _etext = .
 
-.data           0x00800060        0x0 load address 0x0000010a
+.data           0x00800060        0x0 load address 0x00000286
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 c:/users/kasia/documents/mkclipse/avr toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr4/crtatmega8.o
@@ -269,8 +275,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 0x00800060                PROVIDE (__bss_end, .)
-                0x0000010a                __data_load_start = LOADADDR (.data)
-                0x0000010a                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000286                __data_load_start = LOADADDR (.data)
+                0x00000286                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800060        0x0
                 0x00800060                PROVIDE (__noinit_start, .)
